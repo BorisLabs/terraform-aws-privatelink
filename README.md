@@ -1,6 +1,11 @@
 # terraform-aws-privatelink
 AWS Privatelink module
 
+# *** Note ***
+This module supports the new AWS tagging feature for [Privatelink](https://aws.amazon.com/about-aws/whats-new/2022/09/aws-privatelink-announces-enhanced-tagging-capability-service-owners/), to use this feature a change to the AWS provider is required. There's currently a [PR](https://github.com/hashicorp/terraform-provider-aws/pull/27640) open to make this work. If you want to use this module you'll need to build the provider locally. See [Building Provider](Build.MD).
+
+#
+
 This terraform module creates the neccessary components for an AWS Privatelink service. 
 
 ```hcl
