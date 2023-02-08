@@ -1,5 +1,13 @@
 All notable changes to this terraform will be documented in this file.
 
+## [1.0.1](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.0.0...v1.0.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* Removed validation around list vars ([e3a861d](https://github.com/BorisLabs/terraform-aws-privatelink/commit/e3a861dbc4a045100a3d22600796b9ead78ce9c3))
+* updated README ([5ffd852](https://github.com/BorisLabs/terraform-aws-privatelink/commit/5ffd852503a309ca6785f6d4b5271a01f04aa868))
+
 # 1.0.0 (2023-02-08)
 
 
