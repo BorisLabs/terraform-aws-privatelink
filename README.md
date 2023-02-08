@@ -2,8 +2,7 @@
 AWS Privatelink module
 
 # *** Note ***
-This module supports the new AWS tagging feature for [Privatelink](https://aws.amazon.com/about-aws/whats-new/2022/09/aws-privatelink-announces-enhanced-tagging-capability-service-owners/), to use this feature a change to the AWS provider is required. There's currently a [PR](https://github.com/hashicorp/terraform-provider-aws/pull/27640) open to make this work. If you want to use this module you'll need to build the provider locally. See [Building Provider](Build.MD).
-
+This module supports the new AWS tagging feature for [Privatelink](https://aws.amazon.com/about-aws/whats-new/2022/09/aws-privatelink-announces-enhanced-tagging-capability-service-owners/), to make use of this feature a change to the AWS provider is required. There's currently a [PR](https://github.com/hashicorp/terraform-provider-aws/pull/27640) open to make this work. As a temporary workaround I'm using a submodule that invokes the AWS CLI, this module requires both AWS CLI & JQ installed & available. See [digitickets/cli/aws](https://registry.terraform.io/modules/digitickets/cli/aws/latest) for more details on module usage.
 #
 
 This terraform module creates the neccessary components for an AWS Privatelink service. 
@@ -22,37 +21,161 @@ No requirements.
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.34.0 |
+The following providers are used by this module:
+
+- <a name="provider_aws"></a> [aws](#provider\_aws) (4.34.0)
+
+- <a name="provider_sns"></a> [sns](#provider\_sns)
 
 ## Modules
 
-No modules.
+The following Modules are called:
+
+### <a name="module_tag_allowed_principals"></a> [tag\_allowed\_principals](#module\_tag\_allowed\_principals)
+
+Source: digitickets/cli/aws
+
+Version: 5.0.4
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_ec2_tag.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) | resource |
-| [aws_vpc_endpoint_service.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service) | resource |
-| [aws_vpc_endpoint_service_allowed_principal.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service_allowed_principal) | resource |
-| [aws_lb.nlb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/lb) | data source |
+The following resources are used by this module:
 
-## Inputs
+- [aws_ec2_tag.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) (resource)
+- [aws_vpc_endpoint_connection_notification.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_connection_notification) (resource)
+- [aws_vpc_endpoint_service.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service) (resource)
+- [aws_vpc_endpoint_service_allowed_principal.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service_allowed_principal) (resource)
+- [sns_topic.name](https://registry.terraform.io/providers/hashicorp/sns/latest/docs/resources/topic) (resource)
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_acceptance_required"></a> [acceptance\_required](#input\_acceptance\_required) | Acceptance required on the privatelink access | `bool` | `true` | no |
-| <a name="input_allowed_principals"></a> [allowed\_principals](#input\_allowed\_principals) | List of object, creates | <pre>list(object({<br>    principal = string<br>    tags      = optional(list(map(any)))<br>    index     = number<br>  }))</pre> | <pre>[<br>  {<br>    "index": 0,<br>    "principal": "arn:aws:iam::123456789012:root",<br>    "tags": [<br>      {<br>        "key": "Customer",<br>        "value": "Default1"<br>      }<br>    ]<br>  }<br>]</pre> | no |
-| <a name="input_nlb_name"></a> [nlb\_name](#input\_nlb\_name) | Name of network loadbalancer | `string` | `null` | no |
-| <a name="input_private_dns_name"></a> [private\_dns\_name](#input\_private\_dns\_name) | Private DNS name for endpoint | `string` | `null` | no |
-| <a name="input_service_name"></a> [service\_name](#input\_service\_name) | Name of the Endpoint service | `string` | `"default-name"` | no |
-| <a name="input_service_tags"></a> [service\_tags](#input\_service\_tags) | Map of tags for the service | `map(any)` | `{}` | no |
+## Required Inputs
+
+No required inputs.
+
+## Optional Inputs
+
+The following input variables are optional (have default values):
+
+### <a name="input_acceptance_required"></a> [acceptance\_required](#input\_acceptance\_required)
+
+Description: Acceptance required on the privatelink access
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_allowed_principals"></a> [allowed\_principals](#input\_allowed\_principals)
+
+Description: Allowed principals to access your service, applies Tags to each principal
+
+Type:
+
+```hcl
+list(object({
+    principal = string
+    tags      = optional(list(map(any)))
+    index     = number
+  }))
+```
+
+Default:
+
+```json
+[
+  {
+    "index": 0,
+    "principal": "arn:aws:iam::123456789012:root",
+    "tags": [
+      {
+        "key": "Customer",
+        "value": "Default1"
+      }
+    ]
+  }
+]
+```
+
+### <a name="input_create_topic"></a> [create\_topic](#input\_create\_topic)
+
+Description: Create an SNS Topic to recieve notification events
+
+Type: `bool`
+
+Default: `true`
+
+### <a name="input_endpoint_connection_notification_events"></a> [endpoint\_connection\_notification\_events](#input\_endpoint\_connection\_notification\_events)
+
+Description: List of connection events on your service endpoint
+
+Type: `list(string)`
+
+Default:
+
+```json
+[
+  "Accept",
+  "Reject"
+]
+```
+
+### <a name="input_gateway_load_balancer_arns"></a> [gateway\_load\_balancer\_arns](#input\_gateway\_load\_balancer\_arns)
+
+Description: Arn of a Gateway Load balancer
+
+Type: `list(string)`
+
+Default: `null`
+
+### <a name="input_network_load_balancer_arns"></a> [network\_load\_balancer\_arns](#input\_network\_load\_balancer\_arns)
+
+Description: Arn of a network loadbalancer
+
+Type: `list(string)`
+
+Default: `null`
+
+### <a name="input_private_dns_name"></a> [private\_dns\_name](#input\_private\_dns\_name)
+
+Description: Private DNS name for endpoint
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_service_name"></a> [service\_name](#input\_service\_name)
+
+Description: Name of the Endpoint service
+
+Type: `string`
+
+Default: `"default-name"`
+
+### <a name="input_service_tags"></a> [service\_tags](#input\_service\_tags)
+
+Description: Map of tags for the service
+
+Type: `map(any)`
+
+Default: `{}`
+
+### <a name="input_supported_ip_address_types"></a> [supported\_ip\_address\_types](#input\_supported\_ip\_address\_types)
+
+Description: List of Support IP Address Types
+
+Type: `list(string)`
+
+Default:
+
+```json
+[
+  "ipv4"
+]
+```
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_endpoint_service"></a> [endpoint\_service](#output\_endpoint\_service) | n/a |
+The following outputs are exported:
+
+### <a name="output_endpoint_service"></a> [endpoint\_service](#output\_endpoint\_service)
+
+Description: n/a
 <!-- END_TF_DOCS -->

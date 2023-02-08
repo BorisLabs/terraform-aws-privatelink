@@ -2,12 +2,16 @@ provider "aws" {
   region = "eu-west-1"
 }
 
+data "aws_lb" "nlb" {
+  name = "service-nlb"
+}
+
 module "privatelink_service" {
   source = "../../"
 
-  service_name = "demo-privatelink-service"
+  service_name               = "demo-privatelink-service"
+  network_load_balancer_arns = [data.aws_lb.nlb.arn]
 
-  nlb_name = "service-nlb"
   allowed_principals = [{
     principal = "arn:aws:iam::123456789012:root"
     index     = 0
@@ -25,5 +29,5 @@ module "privatelink_service" {
 }
 
 output "service" {
-  value = module.privatelink_service
+  value = module.privatelink_service.endpoint_service
 }
