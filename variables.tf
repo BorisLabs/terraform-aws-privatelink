@@ -64,11 +64,6 @@ variable "supported_ip_address_types" {
   description = "List of Support IP Address Types"
   default     = ["ipv4"]
 
-  validation {
-    condition     = contains(["ipv4", "ipv6"], var.supported_ip_address_types)
-    error_message = "Supported values are either ipv4 or ipv6"
-  }
-
   type = list(string)
 }
 
@@ -76,12 +71,14 @@ variable "endpoint_connection_notification_events" {
   description = "List of connection events on your service endpoint"
   default     = ["Accept", "Reject"]
 
-  validation {
-    condition     = contains(["Accept", "Reject", "Connect", "Delete"], var.endpoint_connection_notification_events)
-    error_message = "Supported values are either ipv4 or ipv6"
-  }
-
   type = list(string)
+}
+
+variable "enable_notifications" {
+  description = "Create Notifications for endpoint activity"
+  default     = false
+
+  type = bool
 }
 
 variable "create_topic" {

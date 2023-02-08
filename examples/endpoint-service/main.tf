@@ -12,6 +12,8 @@ module "privatelink_service" {
   service_name               = "demo-privatelink-service"
   network_load_balancer_arns = [data.aws_lb.nlb.arn]
 
+  supported_ip_address_types = ["ipv4"]
+
   allowed_principals = [{
     principal = "arn:aws:iam::123456789012:root"
     index     = 0

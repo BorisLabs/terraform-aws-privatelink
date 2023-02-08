@@ -56,6 +56,8 @@ resource "aws_ec2_tag" "name" {
 }
 
 resource "aws_vpc_endpoint_connection_notification" "name" {
+  count = var.enable_notifications ? 1 : 0
+
   vpc_endpoint_service_id = aws_vpc_endpoint_service.name.id
 
   connection_events           = var.endpoint_connection_notification_events
