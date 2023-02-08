@@ -17,15 +17,15 @@ terraform apply --auto-approve
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 0.13)
 
 ## Providers
 
 The following providers are used by this module:
 
 - <a name="provider_aws"></a> [aws](#provider\_aws) (4.34.0)
-
-- <a name="provider_sns"></a> [sns](#provider\_sns)
 
 ## Modules
 
@@ -42,10 +42,10 @@ Version: 5.0.4
 The following resources are used by this module:
 
 - [aws_ec2_tag.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_tag) (resource)
+- [aws_sns_topic.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) (resource)
 - [aws_vpc_endpoint_connection_notification.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_connection_notification) (resource)
 - [aws_vpc_endpoint_service.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service) (resource)
 - [aws_vpc_endpoint_service_allowed_principal.name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_service_allowed_principal) (resource)
-- [sns_topic.name](https://registry.terraform.io/providers/hashicorp/sns/latest/docs/resources/topic) (resource)
 
 ## Required Inputs
 
@@ -100,7 +100,15 @@ Description: Create an SNS Topic to recieve notification events
 
 Type: `bool`
 
-Default: `true`
+Default: `false`
+
+### <a name="input_enable_notifications"></a> [enable\_notifications](#input\_enable\_notifications)
+
+Description: Create Notifications for endpoint activity
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_endpoint_connection_notification_events"></a> [endpoint\_connection\_notification\_events](#input\_endpoint\_connection\_notification\_events)
 
