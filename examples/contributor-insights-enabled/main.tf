@@ -34,3 +34,13 @@ output "service" {
   value = module.privatelink_service.endpoint_service_details
 }
 
+module "insights_templates" {
+  source = "../../modules/list-managed-rules"
+
+  service_arn = module.privatelink_service.endpoint_service_arn
+}
+
+output "insights" {
+  value = module.insights_templates
+}
+

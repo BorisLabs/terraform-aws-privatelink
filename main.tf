@@ -34,9 +34,12 @@ locals {
   }
 }
 
-// Temporary use of the cli until PR https://github.com/hashicorp/terraform-provider-aws/pull/27640 is merged
-// This is used to get the correct servicePermissionId to allow tags to be applied to Principals on the privatelink
-// Only used if tags are being set on within the var.allowed_principals
+/* 
+Temporary use of the cli until PR https://github.com/hashicorp/terraform-provider-aws/pull/27640 is merged
+This is used to get the correct servicePermissionId to allow tags to be applied to Principals on the privatelink
+Only used if tags are being set on within the var.allowed_principals
+*/
+
 module "tag_allowed_principals" {
   count = length(keys(local.tags_use)) > 0 ? 1 : 0
 
