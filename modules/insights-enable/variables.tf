@@ -16,3 +16,11 @@ variable "contributor_insights_template_list" {
 
   type = list(string)
 }
+
+variable "tags" {
+  description = "Tags to be attached to the CloudWatch Insight Rules"
+  default     = [{}]
+  // Example [{Key=Name, Value=String}, {Key=Environment, Value=Development}]
+
+  type = list(map(string))
+}
