@@ -4,7 +4,7 @@ resource "aws_vpc_endpoint_service" "name" {
   network_load_balancer_arns = var.network_load_balancer_arns
   gateway_load_balancer_arns = var.gateway_load_balancer_arns
 
-  tags = var.service_tags
+  tags = merge(var.service_tags, { Name = var.service_name })
 
   private_dns_name           = var.private_dns_name
   supported_ip_address_types = var.supported_ip_address_types
@@ -55,7 +55,7 @@ resource "aws_ec2_tag" "name" {
 
   key         = each.value.key
   value       = each.value.value
-  resource_id = module.tag_allowed_principals[0].result
+  resource_id = element(module.tag_allowed_principals[0].result, each.value.index)
 }
 
 resource "aws_vpc_endpoint_connection_notification" "name" {
