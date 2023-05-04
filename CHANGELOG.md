@@ -1,5 +1,12 @@
 All notable changes to this terraform will be documented in this file.
 
+# [1.1.0](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.0.3...v1.1.0) (2023-05-04)
+
+
+### Features
+
+* Removed AWSCLI from main module using native resource outputs for tags ([5a39ffb](https://github.com/BorisLabs/terraform-aws-privatelink/commit/5a39ffbb85b8b1ba36bb377257a035ba6719614c))
+
 ## [1.0.3](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.0.2...v1.0.3) (2023-02-13)
 
 
