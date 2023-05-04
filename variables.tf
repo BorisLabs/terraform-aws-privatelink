@@ -43,7 +43,6 @@ variable "allowed_principals" {
   default = [
     {
       principal = "arn:aws:iam::123456789012:root"
-      index     = 0
       tags = [
         {
           key   = "Customer"
