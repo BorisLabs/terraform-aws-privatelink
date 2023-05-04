@@ -23,6 +23,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_contributor_insights_template_list"></a> [contributor\_insights\_template\_list](#input\_contributor\_insights\_template\_list) | A List of Managed Template Names to enable Contributor Insights | `list(string)` | <pre>[<br>  "VpcEndpointService-NewConnectionsByEndpointId-v1",<br>  "VpcEndpointService-BytesByEndpointId-v1",<br>  "VpcEndpointService-RstPacketsByEndpointId-v1",<br>  "VpcEndpointService-ActiveConnectionsByEndpointId-v1"<br>]</pre> | no |
 | <a name="input_service_arn"></a> [service\_arn](#input\_service\_arn) | ARN of the AWS Privatelink Service | `string` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be attached to the CloudWatch Insight Rules | `list(map(string))` | <pre>[<br>  {}<br>]</pre> | no |
 
 ## Outputs
 

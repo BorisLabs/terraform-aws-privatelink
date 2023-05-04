@@ -24,7 +24,6 @@ locals {
         principal = details.principal
         key       = tags.key
         value     = tags.value
-        index     = details.index
       }
     ]
   ])
@@ -34,28 +33,12 @@ locals {
   }
 }
 
-/* 
-Temporary use of the cli until PR https://github.com/hashicorp/terraform-provider-aws/pull/27640 is merged
-This is used to get the correct servicePermissionId to allow tags to be applied to Principals on the privatelink
-Only used if tags are being set on within the var.allowed_principals
-*/
-
-module "tag_allowed_principals" {
-  count = length(keys(local.tags_use)) > 0 ? 1 : 0
-
-  source  = "digitickets/cli/aws"
-  version = "5.0.4"
-
-  aws_cli_commands = ["ec2", "describe-vpc-endpoint-service-permissions", "--service-id ${aws_vpc_endpoint_service.name.id}"]
-  aws_cli_query    = "AllowedPrincipals[0].ServicePermissionId"
-}
-
 resource "aws_ec2_tag" "name" {
   for_each = local.tags_use
 
   key         = each.value.key
   value       = each.value.value
-  resource_id = element(module.tag_allowed_principals[0].result, each.value.index)
+  resource_id = lookup({ for i in aws_vpc_endpoint_service_allowed_principal.name : i.principal_arn => i.id }, each.value.principal)
 }
 
 resource "aws_vpc_endpoint_connection_notification" "name" {
