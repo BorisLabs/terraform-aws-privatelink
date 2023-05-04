@@ -1,5 +1,12 @@
 All notable changes to this terraform will be documented in this file.
 
+## [1.1.2](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.1.1...v1.1.2) (2023-05-04)
+
+
+### Bug Fixes
+
+* Update docs ([c9effc8](https://github.com/BorisLabs/terraform-aws-privatelink/commit/c9effc8022831521e0d821edc78e724295fc88dd))
+
 ## [1.1.1](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.1.0...v1.1.1) (2023-05-04)
 
 
