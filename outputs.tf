@@ -9,6 +9,11 @@ output "endpoint_service_details" {
 }
 
 output "tags" {
-  description = "Tags which where applied to the Service Principal"
+  description = "Tags which where applied to the Service Principals"
   value       = local.tags_use
+}
+
+output "principals" {
+  description = "Map of Principals to Service Endpoint ID"
+  value       = { for principal in aws_vpc_endpoint_service_allowed_principal.name : principal.principal_arn => principal.id }
 }

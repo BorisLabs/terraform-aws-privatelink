@@ -1,10 +1,6 @@
 # terraform-aws-privatelink
 AWS Privatelink module
 
-# *** Note ***
-This module supports the new AWS tagging feature for [Privatelink](https://aws.amazon.com/about-aws/whats-new/2022/09/aws-privatelink-announces-enhanced-tagging-capability-service-owners/), to make use of this feature a change to the AWS provider is required. There's currently a [PR](https://github.com/hashicorp/terraform-provider-aws/pull/27640) open to make this work. As a temporary workaround I'm using a submodule that invokes the AWS CLI, this module requires both AWS CLI & JQ installed & available. See [digitickets/cli/aws](https://registry.terraform.io/modules/digitickets/cli/aws/latest) for more details on module usage.
-#
-
 This terraform module creates the neccessary components for an AWS Privatelink service. 
 
 ```hcl
@@ -29,9 +25,7 @@ terraform apply --auto-approve
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_tag_allowed_principals"></a> [tag\_allowed\_principals](#module\_tag\_allowed\_principals) | digitickets/cli/aws | 5.0.4 |
+No modules.
 
 ## Resources
 
@@ -48,7 +42,7 @@ terraform apply --auto-approve
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_acceptance_required"></a> [acceptance\_required](#input\_acceptance\_required) | Acceptance required on the privatelink access | `bool` | `true` | no |
-| <a name="input_allowed_principals"></a> [allowed\_principals](#input\_allowed\_principals) | Allowed principals to access your service, applies Tags to each principal | <pre>list(object({<br>    principal = string<br>    tags      = optional(list(map(any)))<br>    index     = number<br>  }))</pre> | <pre>[<br>  {<br>    "index": 0,<br>    "principal": "arn:aws:iam::123456789012:root",<br>    "tags": [<br>      {<br>        "key": "Customer",<br>        "value": "Default1"<br>      }<br>    ]<br>  }<br>]</pre> | no |
+| <a name="input_allowed_principals"></a> [allowed\_principals](#input\_allowed\_principals) | Allowed principals to access your service, applies Tags to each principal | <pre>list(object({<br>    principal = string<br>    tags      = optional(list(map(any)))<br>  }))</pre> | <pre>[<br>  {<br>    "index": 0,<br>    "principal": "arn:aws:iam::123456789012:root",<br>    "tags": [<br>      {<br>        "key": "Customer",<br>        "value": "Default1"<br>      }<br>    ]<br>  }<br>]</pre> | no |
 | <a name="input_create_topic"></a> [create\_topic](#input\_create\_topic) | Create an SNS Topic to recieve notification events | `bool` | `false` | no |
 | <a name="input_enable_notifications"></a> [enable\_notifications](#input\_enable\_notifications) | Create Notifications for endpoint activity | `bool` | `false` | no |
 | <a name="input_endpoint_connection_notification_events"></a> [endpoint\_connection\_notification\_events](#input\_endpoint\_connection\_notification\_events) | List of connection events on your service endpoint | `list(string)` | <pre>[<br>  "Accept",<br>  "Reject"<br>]</pre> | no |
@@ -65,5 +59,6 @@ terraform apply --auto-approve
 |------|-------------|
 | <a name="output_endpoint_service_arn"></a> [endpoint\_service\_arn](#output\_endpoint\_service\_arn) | VPC Endpoint Service ARN |
 | <a name="output_endpoint_service_details"></a> [endpoint\_service\_details](#output\_endpoint\_service\_details) | Object of all Outputs from the VPC Endpoint Service |
-| <a name="output_tags"></a> [tags](#output\_tags) | Tags which where applied to the Service Principal |
+| <a name="output_principals"></a> [principals](#output\_principals) | Map of Principals to Service Endpoint ID |
+| <a name="output_tags"></a> [tags](#output\_tags) | Tags which where applied to the Service Principals |
 <!-- END_TF_DOCS -->

@@ -56,7 +56,6 @@ variable "allowed_principals" {
   type = list(object({
     principal = string
     tags      = optional(list(map(any)))
-    index     = number
   }))
 }
 
