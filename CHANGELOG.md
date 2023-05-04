@@ -1,5 +1,12 @@
 All notable changes to this terraform will be documented in this file.
 
+## [1.1.1](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.1.0...v1.1.1) (2023-05-04)
+
+
+### Bug Fixes
+
+* Removed index from default in allowed_principals ([4067882](https://github.com/BorisLabs/terraform-aws-privatelink/commit/406788217ed45aa3c0de8a414e593d1335afd929))
+
 # [1.1.0](https://github.com/BorisLabs/terraform-aws-privatelink/compare/v1.0.3...v1.1.0) (2023-05-04)
 
 
