@@ -85,3 +85,10 @@ variable "create_topic" {
 
   type = bool
 }
+
+variable "supported_regions" {
+  description = "The set of regions from which service consumers can access the service."
+  default     = []
+
+  type = list(string)
+}
